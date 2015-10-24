@@ -3,6 +3,18 @@
 var _ = require('lodash');
 var Party = require('./party.model');
 
+var geolib = require('geolib');
+
+// Search query radius in miles
+var searchQueryRadius = 0.25;
+
+function inRange(locA, locB, searchQueryRadius) {
+  var distanceInMeters = geolib.distance(locA, locB);
+  var distanceInMiles = 0.000621371192;
+
+  return (distanceInMiles <= searchQueryRadius);
+}
+
 // Get list of parties
 exports.index = function(req, res) {
   Party.find(function (err, parties) {
@@ -21,48 +33,26 @@ exports.create = function(req, res) {
 
 // Query for a party by given location and current date and time
 exports.query = function(req, res) {
+  var datetime = new Date();
+
   Party.find({
-    date: new Date(),
-    time: {  }
-  });
-};
+    date: datetime,
+    time: { $lte: datetime.getMilliseconds() }
+  }, function(err, parties) {
+    if(err) { return handleError(res, err) }
+    else {
+      var partiesInRange = [];
+      parties.forEach(function(party) {
+        if(inRange({latitude: req.body.latitude, longitude: req.body.longitude},
+            {latitude: party.latitude, longitude: party.longitude}, searchQueryRadius)) {
+          partiesInRange.push(party);
+        }
+      });
 
-/**
-// Get a single party
-exports.show = function(req, res) {
-  Party.findById(req.params.id, function (err, party) {
-    if(err) { return handleError(res, err); }
-    if(!party) { return res.send(404); }
-    return res.json(party);
+      return res.json(200, partiesInRange);
+    }
   });
 };
-
-// Updates an existing party in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Party.findById(req.params.id, function (err, party) {
-    if (err) { return handleError(res, err); }
-    if(!party) { return res.send(404); }
-    var updated = _.merge(party, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, party);
-    });
-  });
-};
-
-// Deletes a party from the DB.
-exports.destroy = function(req, res) {
-  Party.findById(req.params.id, function (err, party) {
-    if(err) { return handleError(res, err); }
-    if(!party) { return res.send(404); }
-    party.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
-};
-**/
 
 function handleError(res, err) {
   return res.send(500, err);
