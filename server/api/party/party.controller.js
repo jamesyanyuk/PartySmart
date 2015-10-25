@@ -27,6 +27,17 @@ exports.index = function(req, res) {
   });
 };
 
+// Get a single party by id
+exports.show = function(req, res) {
+  Party.find({
+    id: req.params.id
+  }, function (err, parties) {
+    if(err) { return handleError(res, err); }
+    if(!parties) { return res.send(404); }
+    return res.json(parties[0]);
+  });
+};
+
 // Create a party
 exports.create = function(req, res) {
   Party.create({

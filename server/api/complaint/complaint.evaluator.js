@@ -13,17 +13,19 @@ var loop = function(interval) {
 
       var complaints = JSON.parse(body);
       complaints.forEach(function(complaint) {
-        var diff = Math.abs(new Date() - complaint.timestamp);
+        var diff = Math.abs(new Date().getTime() - new Date(complaint.timestamp).getTime());
         var minuteDiff = Math.floor((diff/1000)/60);
+        console.log('MinuteDiff: ' + minuteDiff);
 
-        if(minuteDiff >= 20 && minuteDiff <= 30 && complaint.status === 'PENDING') {
+        if(minuteDiff >= 1 && minuteDiff <= 2 && complaint.status === 'PENDING') {
           smsNotification.sendToNumber(complaint.complainant, 'Has the noise been reduced? (Reply with YES or NO)');
           request.put({url: 'http://localhost:'+config.port+'/api/complaint/'+complaint.complainant, form: {
             status: 'AWAITINGRESPONSE'
           }}, function(putErr, response, body) {
             if(putErr) console.log('ERROR: ' + putErr);
           });
-        } else if(minuteDiff >= 30) {
+        } else if(minuteDiff >= 2) {
+          console.log('Deleting ' + complaint.complainant);
           request.del('http://localhost:'+config.port+'/api/complaint/'+complaint.complainant, function(delErr) {
             if(delErr) console.log('ERROR: ' + delErr);
           });

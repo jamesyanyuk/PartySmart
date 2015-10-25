@@ -14,7 +14,6 @@ var smsNotification = require('../../lib/notification.sms');
 exports.index = function(req, res) {
   Complaint.find(function (err, complaints) {
     if(err) { return handleError(res, err); }
-    console.log(complaints);
     return res.json(200, complaints);
   });
 };
@@ -60,16 +59,19 @@ exports.create = function(req, res) {
       longitude: req.body.longitude
     }}, function(err, response, body) {
       if(err) { return handleError(res, err); }
-      var data = JSON.parse(body);
-
       var parties = [];
-      data.forEach(function(party) {
-        parties.push({ id: party.id });
-      });
+
+      if(body) {
+        var data = JSON.parse(body);
+        data.forEach(function (party) {
+          parties.push({id: party.id});
+        });
+      }
 
       // Check number of registered parties located
       if(parties.length === 0) {
         // Notify cops of noise disturbance at location of complainant
+        return res.send(200);
       } else {
         // Create complaint object and add all nearby registered parties
         Complaint.create({
@@ -97,7 +99,7 @@ exports.create = function(req, res) {
 // Deletes a complaint from the DB.
 exports.destroy = function(req, res) {
   Complaint.find({
-    complainant: req.body.complainant
+    complainant: req.params.complainant
   }, function(err, complaints) {
     if(err) { return handleError(res, err); }
     if(!complaints) { return res.send(404); }

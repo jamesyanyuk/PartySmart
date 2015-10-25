@@ -6,7 +6,7 @@ var evaluator = require('./complaint.evaluator');
 
 var router = express.Router();
 
-evaluator.loop(60);
+evaluator.loop(15);
 
 router.get('/', controller.index);
 router.post('/', controller.create);
