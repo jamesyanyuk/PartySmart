@@ -2,14 +2,16 @@
 
 var express = require('express');
 var controller = require('./complaint.controller');
+var evaluator = require('./complaint.evaluator');
 
 var router = express.Router();
 
+evaluator.loop(60);
+
 router.get('/', controller.index);
-router.get('/:id', controller.show);
 router.post('/', controller.create);
-router.put('/:id', controller.update);
-router.patch('/:id', controller.update);
-router.delete('/:id', controller.destroy);
+router.delete('/:complainant', controller.destroy);
+router.put('/:complainant', controller.update);
+router.get('/:complainant', controller.show);
 
 module.exports = router;

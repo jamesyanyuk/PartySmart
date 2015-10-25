@@ -5,13 +5,17 @@ var mongoose = require('mongoose'),
 
 // Duration and time in milliseconds
 var PartySchema = new Schema({
+  id: String,
   latitude: Number,
   longitude: Number,
   address: String,
   date: Date,
-  time: Number,
   contactMobilePhone: String,
-  contactEmail: String
+  contactEmail: String,
+  expireAt: Date
 });
+
+// Expire at the time indicated by the expireAt field
+PartySchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
 module.exports = mongoose.model('Party', PartySchema);
