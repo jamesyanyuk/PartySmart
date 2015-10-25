@@ -14,17 +14,25 @@
   <div class="row row-offcanvas row-offcanvas-left">
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
       <div class="list-group">
-        <a href="#" class="list-group-item active">View Registered Parties</a>
-        <a href="#" class="list-group-item">View Complaints</a>
+        <button ng-click="partiesTabClick()" class="list-group-item" ng-class="tab == 'parties' ? 'active' : 'unactive'">View Registered Parties</button>
+        <button ng-click="complaintsTabClick()" class="list-group-item" ng-class="tab == 'complaints' ? 'active' : 'unactive'">View Complaints</button>
       </div>
     </div>
     <div class="col-xs-12 col-sm-9">
       <p class="pull-left visible-xs">
         <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
       </p>
-      <div class="jumbotron">
-        <h1>Registered Parties</h1>
-        <p>This where the map of registered parties will appear
+      <div ng-show="tab == 'parties'" class="jumbotron" style="padding-top:20px;padding-bottom:20px">
+        <h3>Registered Parties</h3>
+        <ul style="list-style-type:circle">
+          <li ng-repeat="party in parties">Address: {{party.address}}, Phone: {{party.contactMobilePhone}}, Email: {{party.contactEmail}}, Date: {{party.date}}</li>
+        </ul>
+      </div>
+      <div ng-show="tab == 'complaints'" class="jumbotron" style="padding-top:20px;padding-bottom:20px">
+        <h3>Noise Complaints</h3>
+        <ul style="list-style-type:circle">
+          <li ng-repeat="complaint in complaints">Complainant: {{complaint.complainant}}, Timestamp: {{complaint.timestamp}}, Status: {{complaint.status}}, Address: {{complaint.address}}, Details: {{complaint.details}}</li>
+        </ul>
       </div>
       </div>
     </div>

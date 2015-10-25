@@ -8,8 +8,8 @@
 
 <div class="container">
   <div class="row">
-
-    <div class="col-lg-10">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
       <div class = "page-header">
       <h1>Register Your Party</h1>
       <h4 style="line-height:1.4"> Enter your information here. See the <a href="/about">About</a> page for more information. </h4>
@@ -44,13 +44,17 @@
             <label for="inputAddress"class="col-lg-2 control-label">Party Address (MUST be your place of residence)</label>
             <br>
             <div class="col-lg-10">
-              <input type="text" class="form-control" id="inputAddress" placeholder="e.g., 300 Puffton Village Apartments, Amherst, MA 01002" ng-model="address">
+              <input ng-change="addressChanged(address)" type="text" class="form-control" id="inputAddress" placeholder="e.g., 300 Puffton Village Apartments, Amherst, MA 01002" ng-model="address">
             </div>
           </div>
+          <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options" events="map.events" style="height:450px">
+            <ui-gmap-marker coords="mainMarker" idkey="'mainMarker.id'" options="markerOptions.mainMarker" events="mainMarker.events"></ui-gmap-marker>
+            <ui-gmap-markers models="igMarkers" idkey="igMarkers.id" coords="'coords'" idkey="igMarkers.id" options="markerOptions.igMarkers"></ui-gmap-markers>
+          </ui-gmap-google-map>
          <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-              <button ui-sref="main" type="reset" class="btn btn-default">Cancel</button>
-              <button class="btn btn-primary" ng-click="submit()">Submit</button>
+              <button ui-sref="main" type="reset" class="btn btn-default" style="float:right;margin-left:7px">Cancel</button>
+              <button class="btn btn-primary" ng-click="submit()" style="float:right">Submit</button>
             </div>
           </div>
         </fieldset>

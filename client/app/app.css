@@ -12,6 +12,23 @@
     url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
+.mapContainer {
+  margin-top: -53px;
+  padding-top: 53px;
+  margin-bottom: -50px;
+  padding-bottom: 50px;
+}
+
+.angular-google-map {
+  height: 450px;
+  padding-bottom: 10px;
+}
+
+.angular-google-map-container {
+  border:3px dashed #d6dde5;
+  height: 100%;
+}
+
 /**
  *Font Awesome Fonts
  */

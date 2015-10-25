@@ -5,11 +5,19 @@ angular.module('partyappApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'uiGmapgoogle-maps',
+  'angularReverseGeocode'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $urlRouterProvider
       .otherwise('/');
+
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyAxS234dtYNRY1iDam8b8g4jNwbHXTxQDE',
+      v: '3.17',
+      libraries: 'weather,geometry,visualization'
+    });
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
