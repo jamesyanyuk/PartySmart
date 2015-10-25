@@ -1,0 +1,59 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-lg-10">
+      <div class = "page-header">
+      <h1>Register Your Party</h1>
+      <h3> Enter your information here. See the <a href="/about">About</a> page for more information. </h3>
+        </div>
+
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="form-group">
+            <label for="inputName" class="col-lg-2 control-label">Your Name</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="inputName" placeholder="Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPhoneNumber" class="col-lg-2 control-label">Your Phone Number</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="(XXX)XXX-XXXX">
+          </div>
+            </div>
+          <div class="form-group">
+            <label for="inputDate"class="col-lg-2 control-label">Date</label>
+            <div class="col-lg-3">
+              <input type="text" class="form-control" id="inputDate" placeholder="mm/dd/yyyy">
+            </div>
+            <label for="inputTime"class="col-lg-1 control-label">Time</label>
+            <div class="col-lg-2">
+              <input type="text" class="form-control" id="inputTime" placeholder="hh:mm">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputAddress"class="col-lg-2 control-label">Party Address (MUST be your place of residence)</label>
+            //TODO: CHANGE TO POPUP TIP
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="inputAddress" placeholder="e.g., 300 Puffton Village Apartments, Amherst, MA 01002">
+            </div>
+          </div>
+         <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+              <button type="reset" class="btn btn-default">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+    <div class="col-lg-2"></div>
+  </div>
+  </div>
+  </div>
+
